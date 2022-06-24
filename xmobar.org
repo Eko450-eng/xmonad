@@ -1,0 +1,75 @@
+#+TITLE: xmobar
+#+PROPERTY: header-args :tangle xmobarrc
+#+auto_tangle: t
+#+STARTUP: overview
+* Colors
+    #1c2023
+    #c7ccd1
+    #c0c5ce
+    #ff5050
+    #1c2023
+    #ffffff
+    #ffd47e
+    #95c7ae
+    #000000
+    #c23127
+    #6790eb
+    #c7ae95
+    #4c566a
+    #282c34
+    #212121
+    #4c566a
+    #2aa899
+    #abb2bf
+    #81a1c1
+    #56b6c2
+    #1c2023
+    #245361
+    #4c566a
+    #282c34
+
+* Config Start
+#+begin_src haskell
+Config {
+#+end_src
+
+* Appearance
+** Variables
+#+begin_src haskell
+      font =              "xft:Montserrat:pixelsize=15:regular:antialias=true"
+    , additionalFonts = [ "xft:Hack Nerd Font:pixelsize=15:weight=regular"
+                        , "xft:Font Awesome 6 Brands Regular:pixelsize=12:weight=regular"
+                        , "xft:Font Awesome 6 Free Regular:pixelsize=12:weight=regular"
+                        , "xft:Font Awesome 6 Free Solid:pixelsize=12:weight=solid"
+                        , "xft:Mononoki Nerd Font:pixelsize=15:hinting=true:weight=regular"
+                        ]
+
+    , bgColor =      "#4c566a"
+    , fgColor =      "white"
+    , position =     Top
+    , border =       BottomB
+    , borderColor =  "#000000"
+    , sepChar =  "%"                    -- delineator between plugin names and straight text
+    , alignSep = "}{"                   -- separator between left-right alignment
+    , lowerOnStart =     True           -- send to bottom of window stack on start
+    , hideOnStart =      False          -- start with window unmapped (hidden)
+    , allDesktops =      False          -- show on all desktops
+    , overrideRedirect = True           -- set the Override Redirect flag (Xlib)
+    , pickBroadest =     True           -- choose widest display (multi-monitor)
+    , persistent =       True           -- enable/disable hiding (True = disabled)
+#+end_src
+
+#+begin_src haskell
+   , commands = [ Run Date "<fn=1>\xf073</fn>  %b %d %Y   " "date" 10
+                , Run Com "echo" ["<fn=1>\xf303</fn>"] "penguin" 3600
+                , Run Com "echo" ["<fn=1>\xf303</fn>"] "penguin2" 3600
+                , Run Date "%H:%M:%S" "date2" 10
+                , Run StdinReader
+                , Run Com ".config/xmobar/trayerpad.sh" [] "trayerpad" 20
+                , Run StdinReader
+                ]
+    , template = "   %StdinReader% } <fc=#56b6c2> %date2% </fc> { %date% %trayerpad%"
+
+       }
+   }
+#+end_src
