@@ -10,8 +10,9 @@ Config {
 
     , bgColor =      "#4c566a"
     , fgColor =      "white"
-    , position =     Top
     , border =       BottomB
+    -- , position =     Static { xpos = 4370, ypos = 0, width = 200, height = 20 }
+    , position = TopW R 5
     , borderColor =  "#000000"
     , sepChar =  "%"                    -- delineator between plugin names and straight text
     , alignSep = "}{"                   -- separator between left-right alignment
@@ -23,14 +24,9 @@ Config {
     , persistent =       True           -- enable/disable hiding (True = disabled)
 
    , commands = [ Run Date "<fn=1>\xf073</fn>  %b %d %Y   " "date" 10
-                , Run Com "echo" ["<fn=1>\xf303</fn>"] "penguin" 3600
-                , Run Com "echo" ["<fn=1>\xf303</fn>"] "penguin2" 3600
-                , Run Date "%H:%M:%S" "date2" 10
-                , Run StdinReader
-                , Run Com ".config/xmonad/trayerpad.sh" [] "trayerpad" 20
-                , Run StdinReader
+                , Run Com ".config/xmonad/trayerpad.sh" [] "trayerpadL" 20
                 ]
-    , template = "   %StdinReader% } <fc=#56b6c2> %date2% </fc> { %date% %trayerpad%"
+    , template = "}%date%{ %trayerpadL%"
 
        }
    }

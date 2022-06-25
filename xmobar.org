@@ -65,7 +65,7 @@ Config {
                 , Run Com "echo" ["<fn=1>\xf303</fn>"] "penguin2" 3600
                 , Run Date "%H:%M:%S" "date2" 10
                 , Run StdinReader
-                , Run Com ".config/xmobar/trayerpad.sh" [] "trayerpad" 20
+                , Run Com ".config/xmonad/trayerpad.sh" [] "trayerpad" 20
                 , Run StdinReader
                 ]
     , template = "   %StdinReader% } <fc=#56b6c2> %date2% </fc> { %date% %trayerpad%"

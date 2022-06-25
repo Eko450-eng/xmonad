@@ -10,7 +10,7 @@ Config {
 
     , bgColor =      "#4c566a"
     , fgColor =      "white"
-    , position =     Top
+    , position =     Static { xpos = 1080, ypos = 2, width = 650, height = 23 }
     , border =       BottomB
     , borderColor =  "#000000"
     , sepChar =  "%"                    -- delineator between plugin names and straight text
@@ -19,18 +19,10 @@ Config {
     , hideOnStart =      False          -- start with window unmapped (hidden)
     , allDesktops =      False          -- show on all desktops
     , overrideRedirect = True           -- set the Override Redirect flag (Xlib)
-    , pickBroadest =     True           -- choose widest display (multi-monitor)
+    , pickBroadest =     False           -- choose widest display (multi-monitor)
     , persistent =       True           -- enable/disable hiding (True = disabled)
 
-   , commands = [ Run Date "<fn=1>\xf073</fn>  %b %d %Y   " "date" 10
-                , Run Com "echo" ["<fn=1>\xf303</fn>"] "penguin" 3600
-                , Run Com "echo" ["<fn=1>\xf303</fn>"] "penguin2" 3600
-                , Run Date "%H:%M:%S" "date2" 10
-                , Run StdinReader
-                , Run Com ".config/xmonad/trayerpad.sh" [] "trayerpad" 20
-                , Run StdinReader
-                ]
-    , template = "   %StdinReader% } <fc=#56b6c2> %date2% </fc> { %date% %trayerpad%"
-
+    , commands = [ Run StdinReader]
+    , template = " %StdinReader% "
        }
    }

@@ -20,7 +20,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.Place
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 
 import qualified XMonad.StackSet as W
@@ -53,78 +53,78 @@ myWorkspaces    = [ "<fn=1> \xf303 </fn> "
 
 myKeys = \c -> mkKeymap c $
 
-[ ("M-<Return>", spawn $ terminal c)
-, ("M-<Escape>", spawn "betterlockscreen -l -w dim")
-, ("M-<Space>", nextScreen)
-, ("M-a", spawn "rofi -show emoji -modi emoji")
-, ("M-b", spawn "brave")
-, ("M-d", spawn "rofi -show drun")
-, ("M-e", spawn "emacsclient -c -a 'emacs'")
-, ("M-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh alacritty")
-, ("M-i", spawn "clipmenu")
-, ("M-m", sendMessage ToggleLayout)
-, ("M-n", spawn "nautilus")
-, ("M-q", kill)
-, ("M-t", sendMessage NextLayout)
+        [ ("M-<Return>", spawn $ terminal c)
+        , ("M-<Escape>", spawn "betterlockscreen -l -w dim")
+        , ("M-<Space>", nextScreen)
+        , ("M-a", spawn "rofi -show emoji -modi emoji")
+        , ("M-b", spawn "brave")
+        , ("M-d", spawn "rofi -show drun")
+        , ("M-e", spawn "emacsclient -c -a 'emacs'")
+        , ("M-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh alacritty")
+        , ("M-i", spawn "clipmenu")
+        , ("M-m", sendMessage ToggleLayout)
+        , ("M-n", spawn "nautilus")
+        , ("M-q", kill)
+        , ("M-t", sendMessage NextLayout)
 
-, ("M-S-<Space>", shiftNextScreen)
-, ("M-S-d", spawn "rofi -show calc -no-show-match -no-sort")
-, ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
-, ("M-S-r", spawn "xmonad --recompile; xmonad --restart")
-, ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
+        , ("M-S-<Space>", shiftNextScreen)
+        , ("M-S-d", spawn "rofi -show calc -no-show-match -no-sort")
+        , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
+        , ("M-S-r", spawn "xmonad --recompile; xmonad --restart")
+        , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
 
-, ("M-S-C-x", io (exitWith ExitSuccess) )
+    , ("M-S-C-x", io (exitWith ExitSuccess) )
 
-, ("M-C-<Esc>", spawn "systemctl suspend")
-, ("M-C-d", spawn "rofi -show window")
+    , ("M-C-<Esc>", spawn "systemctl suspend")
+    , ("M-C-d", spawn "rofi -show window")
 
-, ("M1-p", spawn "pavucontrol")
+    , ("M1-p", spawn "pavucontrol")
 
-, ("M1-C-o", spawn "/home/eko/.config/qtile/scripts/picom-toggle.sh")
-, ("M1-C-t", spawn "xterm")
+    , ("M1-C-o", spawn "/home/eko/.config/qtile/scripts/picom-toggle.sh")
+    , ("M1-C-t", spawn "xterm")
 
-, ("<Print>", spawn "flameshot full -p /home/eko/Pictures")
+    , ("<Print>", spawn "flameshot full -p /home/eko/Pictures")
 
-, ("M-c", spawn "playerctl play-pause")
-, ("M-S-v", spawn "playerctl next")
-, ("M-S-x", spawn "playerctl previous")
+    , ("M-c", spawn "playerctl play-pause")
+    , ("M-S-v", spawn "playerctl next")
+    , ("M-S-x", spawn "playerctl previous")
 
-, ("M-j", windows W.focusDown)
-, ("M-k", windows W.focusUp)
-, ("M-S-j", windows W.swapDown)
-, ("M-S-k", windows W.swapUp)
-, ("M-C-j", sendMessage Shrink)
-, ("M-C-k", sendMessage Expand)
+    , ("M-j", windows W.focusDown)
+    , ("M-k", windows W.focusUp)
+    , ("M-S-j", windows W.swapDown)
+    , ("M-S-k", windows W.swapUp)
+    , ("M-C-j", sendMessage Shrink)
+    , ("M-C-k", sendMessage Expand)
 
-, ("M-h", windows W.focusDown)
-, ("M-l", windows W.focusUp)
-, ("M-S-h", windows W.swapDown)
-, ("M-S-l", windows W.swapUp)
-, ("M-C-h", sendMessage Shrink)
-, ("M-C-l", sendMessage Expand)
--- Shrink/expand the master area
--- (De)Increment the number of windows in the master area
--- , ("M-,", sendMessage IncMasterN +1)
--- , ("M-.", sendMessage IncMasterN -1)
+    , ("M-h", windows W.focusDown)
+    , ("M-l", windows W.focusUp)
+    , ("M-S-h", windows W.swapDown)
+    , ("M-S-l", windows W.swapUp)
+    , ("M-C-h", sendMessage Shrink)
+    , ("M-C-l", sendMessage Expand)
+    -- Shrink/expand the master area
+    -- (De)Increment the number of windows in the master area
+    -- , ("M-,", sendMessage IncMasterN +1)
+    -- , ("M-.", sendMessage IncMasterN -1)
 
---  Reset the layouts on the current workspace to default
--- , ("M-S-<Space>", setLayout $ myLayout.tiled)
-, ("M-S-<Return>", windows W.swapMaster)
-, ("M-m", windows W.focusMaster)
-, ("M-n", refresh)
-, ("M-S-t", withFocused $ windows . W.sink)
+    --  Reset the layouts on the current workspace to default
+    -- , ("M-S-<Space>", setLayout $ myLayout.tiled)
+    , ("M-S-<Return>", windows W.swapMaster)
+    , ("M-m", windows W.focusMaster)
+    , ("M-n", refresh)
+    , ("M-S-t", withFocused $ windows . W.sink)
 
--- Toggle the status bar gap
--- Use this binding with avoidStruts from Hooks.ManageDocks.
--- See also the statusBar function from Hooks.DynamicLog.
--- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    -- Toggle the status bar gap
+    -- Use this binding with avoidStruts from Hooks.ManageDocks.
+    -- See also the statusBar function from Hooks.DynamicLog.
+    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
-]
+    ]
 
-++
-[("M-" ++ m ++ k, windows $ f i)
-    | (i, k) <- zip (myWorkspaces) (map show([1 .. 9] ++ [0] :: [Int]))
-    , (f, m) <- [(W.greedyView, ""), (W.shift, "S-")]]
+    ++
+    [("M-" ++ m ++ k, windows $ f i)
+        | (i, k) <- zip (myWorkspaces) (map show([1 .. 9] ++ [0] :: [Int]))
+        , (f, m) <- [(W.greedyView, ""), (W.shift, "S-")]]
 
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
@@ -168,6 +168,7 @@ myEventHook = mempty
 
 myStartupHook = do
   spawnOnce "clipmenud"
+  spawnOnce "tint2"
   spawnOnce "watch -n 60 feh --randomize --bg-fill ~/Pictures/wallpapers/Riced/* & disown"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"
@@ -177,42 +178,45 @@ myStartupHook = do
   spawnOnce "dunst"
 
 main = do
-        barpipe <- spawnPipeWithLocaleEncoding "xmobar -x1080 /home/eko/.config/xmonad/xmobarrc"
-        xmonad $ docks $ ewmh def
-            {
-                terminal           = myTerminal,
-                focusFollowsMouse  = myFocusFollowsMouse,
-                clickJustFocuses   = myClickJustFocuses,
-                borderWidth        = myBorderWidth,
-                modMask            = myModMask,
-                workspaces         = myWorkspaces,
-                normalBorderColor  = myNormalBorderColor,
-                focusedBorderColor = myFocusedBorderColor,
-                keys               = myKeys,
-                mouseBindings      = myMouseBindings,
-                layoutHook         = myLayout,
-                manageHook         = myManageHook,
-                handleEventHook    = myEventHook,
-                startupHook        = myStartupHook,
-                logHook = dynamicLogWithPP $ xmobarPP {
-                    ppOutput = hPutStrLn barpipe
-                    , ppCurrent = xmobarColor "#95c7ae" "" . wrap
-                                ("<box type=Bottom width=2 mb=2 color=#95c7ae>") "</box>"
-                    -- Visible but not current workspace
-                    , ppVisible = xmobarColor "#2aa899" ""
-                    -- Hidden workspace
-                    , ppHidden = xmobarColor "#2aa899" "" . wrap
-                                ("<box type=Top width=2 mt=1 color=#2aa899>") "</box>"
-                    -- Hidden workspaces (no windows)
-                    , ppHiddenNoWindows = xmobarColor "#56b6c2" ""
-                    -- Title of active window
-                    , ppTitle = xmobarColor "#2aa899" "" . shorten 60
-                    -- Separator character
-                    , ppSep =  "<fc=#ffd47e> | </fc>"
-                    -- Urgent workspace
-                    , ppUrgent = xmobarColor "#ff5050" "" . wrap "!" "!"
-                }
+    xmproc <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrc"
+    barpipe <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrcLeft"
+    -- barpipe2 <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrcRight"
+    -- barpipe3 <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrcCenter"
+    xmonad $ docks $ ewmh def
+        {
+            terminal           = myTerminal,
+            focusFollowsMouse  = myFocusFollowsMouse,
+            clickJustFocuses   = myClickJustFocuses,
+            borderWidth        = myBorderWidth,
+            modMask            = myModMask,
+            workspaces         = myWorkspaces,
+            normalBorderColor  = myNormalBorderColor,
+            focusedBorderColor = myFocusedBorderColor,
+            keys               = myKeys,
+            mouseBindings      = myMouseBindings,
+            layoutHook         = myLayout,
+            manageHook         = myManageHook,
+            handleEventHook    = myEventHook,
+            startupHook        = myStartupHook,
+            logHook = dynamicLogWithPP $ xmobarPP {
+                ppOutput = hPutStrLn xmproc
+                , ppCurrent = xmobarColor "#95c7ae" "" . wrap
+                            ("<box type=Bottom width=2 mb=2 color=#95c7ae>") "</box>"
+                -- Visible but not current workspace
+                , ppVisible = xmobarColor "#2aa899" ""
+                -- Hidden workspace
+                , ppHidden = xmobarColor "#2aa899" "" . wrap
+                            ("<box type=Top width=2 mt=1 color=#2aa899>") "</box>"
+                -- Hidden workspaces (no windows)
+                , ppHiddenNoWindows = xmobarColor "#56b6c2" ""
+                -- Title of active window
+                , ppTitle = xmobarColor "#2aa899" "" . shorten 60
+                -- Separator character
+                , ppSep =  "<fc=#ffd47e> | </fc>"
+                -- Urgent workspace
+                , ppUrgent = xmobarColor "#ff5050" "" . wrap "!" "!"
             }
+        }
 
 -- defaults = def {
 --       -- simple stuff
@@ -225,12 +229,12 @@ main = do
 --         normalBorderColor  = myNormalBorderColor,
 --         focusedBorderColor = myFocusedBorderColor,
 
--- keys               = myKeys,
--- mouseBindings      = myMouseBindings,
+        -- keys               = myKeys,
+        -- mouseBindings      = myMouseBindings,
 
---     layoutHook         = myLayout,
---     manageHook         = myManageHook,
---     handleEventHook    = myEventHook,
---     logHook = dynamicLogWithPP $ def { ppOutput = hPutStrLn barpipe }
---     startupHook        = myStartupHook
--- }
+    --     layoutHook         = myLayout,
+    --     manageHook         = myManageHook,
+    --     handleEventHook    = myEventHook,
+    --     logHook = dynamicLogWithPP $ def { ppOutput = hPutStrLn barpipe }
+    --     startupHook        = myStartupHook
+    -- }

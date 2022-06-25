@@ -26,7 +26,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.Place
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 
 import qualified XMonad.StackSet as W
@@ -293,6 +293,7 @@ per-workspace layout choices.
 #+begin_src haskell
 myStartupHook = do
   spawnOnce "clipmenud"
+  spawnOnce "tint2"
   spawnOnce "watch -n 60 feh --randomize --bg-fill ~/Pictures/wallpapers/Riced/* & disown"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"
@@ -304,42 +305,45 @@ myStartupHook = do
 * Main
 #+begin_src haskell
 main = do
-        barpipe <- spawnPipeWithLocaleEncoding "xmobar -x1080 /home/eko/.config/xmonad/xmobarrc"
-        xmonad $ docks $ ewmh def
-            {
-                terminal           = myTerminal,
-                focusFollowsMouse  = myFocusFollowsMouse,
-                clickJustFocuses   = myClickJustFocuses,
-                borderWidth        = myBorderWidth,
-                modMask            = myModMask,
-                workspaces         = myWorkspaces,
-                normalBorderColor  = myNormalBorderColor,
-                focusedBorderColor = myFocusedBorderColor,
-                keys               = myKeys,
-                mouseBindings      = myMouseBindings,
-                layoutHook         = myLayout,
-                manageHook         = myManageHook,
-                handleEventHook    = myEventHook,
-                startupHook        = myStartupHook,
-                logHook = dynamicLogWithPP $ xmobarPP {
-                    ppOutput = hPutStrLn barpipe
-                    , ppCurrent = xmobarColor "#95c7ae" "" . wrap
-                                ("<box type=Bottom width=2 mb=2 color=#95c7ae>") "</box>"
-                    -- Visible but not current workspace
-                    , ppVisible = xmobarColor "#2aa899" ""
-                    -- Hidden workspace
-                    , ppHidden = xmobarColor "#2aa899" "" . wrap
-                                ("<box type=Top width=2 mt=1 color=#2aa899>") "</box>"
-                    -- Hidden workspaces (no windows)
-                    , ppHiddenNoWindows = xmobarColor "#56b6c2" ""
-                    -- Title of active window
-                    , ppTitle = xmobarColor "#2aa899" "" . shorten 60
-                    -- Separator character
-                    , ppSep =  "<fc=#ffd47e> | </fc>"
-                    -- Urgent workspace
-                    , ppUrgent = xmobarColor "#ff5050" "" . wrap "!" "!"
-                }
+    xmproc <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrc"
+    barpipe <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrcLeft"
+    -- barpipe2 <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrcRight"
+    -- barpipe3 <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrcCenter"
+    xmonad $ docks $ ewmh def
+        {
+            terminal           = myTerminal,
+            focusFollowsMouse  = myFocusFollowsMouse,
+            clickJustFocuses   = myClickJustFocuses,
+            borderWidth        = myBorderWidth,
+            modMask            = myModMask,
+            workspaces         = myWorkspaces,
+            normalBorderColor  = myNormalBorderColor,
+            focusedBorderColor = myFocusedBorderColor,
+            keys               = myKeys,
+            mouseBindings      = myMouseBindings,
+            layoutHook         = myLayout,
+            manageHook         = myManageHook,
+            handleEventHook    = myEventHook,
+            startupHook        = myStartupHook,
+            logHook = dynamicLogWithPP $ xmobarPP {
+                ppOutput = hPutStrLn xmproc
+                , ppCurrent = xmobarColor "#95c7ae" "" . wrap
+                            ("<box type=Bottom width=2 mb=2 color=#95c7ae>") "</box>"
+                -- Visible but not current workspace
+                , ppVisible = xmobarColor "#2aa899" ""
+                -- Hidden workspace
+                , ppHidden = xmobarColor "#2aa899" "" . wrap
+                            ("<box type=Top width=2 mt=1 color=#2aa899>") "</box>"
+                -- Hidden workspaces (no windows)
+                , ppHiddenNoWindows = xmobarColor "#56b6c2" ""
+                -- Title of active window
+                , ppTitle = xmobarColor "#2aa899" "" . shorten 60
+                -- Separator character
+                , ppSep =  "<fc=#ffd47e> | </fc>"
+                -- Urgent workspace
+                , ppUrgent = xmobarColor "#ff5050" "" . wrap "!" "!"
             }
+        }
 #+end_src
 ** Defaults
 #+begin_src haskell
