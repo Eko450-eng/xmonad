@@ -1,5 +1,5 @@
 #+TITLE: xmobarCenter
-#+PROPERTY: header-args :tangle xmobarrcCenter
+#+PROPERTY: header-args :tangle xmobarrc1
 #+auto_tangle: t
 #+STARTUP: overview
 * Colors

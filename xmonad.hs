@@ -20,8 +20,9 @@ import XMonad.Actions.CycleWS
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.Place
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import Colors.DoomOne
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -40,15 +41,15 @@ myFocusFollowsMouse = True
 myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
-myWorkspaces    = [ "<fn=1> \xf303 </fn> "
-                  , "<fn=2> \xf268 </fn>"
-                  , "<fn=2> \xf392 </fn>"
-                  , "<fn=2> \xf167 </fn>"
-                  , "<fn=1> \xf11b </fn>"
-                  , "<fn=3> \xf441 </fn>"
-                  , "<fn=2> \xf799 </fn>"
-                  , "<fn=1> \xf120 </fn>"
-                  , "<fn=1> \xf1f8 </fn>"
+myWorkspaces    = [ "<fn=1>\xf303</fn>"
+                  , "<fn=2>\xf268</fn>"
+                  , "<fn=2>\xf392</fn>"
+                  , "<fn=2>\xf167</fn>"
+                  , "<fn=1>\xf11b</fn>"
+                  , "<fn=3>\xf441</fn>"
+                  , "<fn=2>\xf799</fn>"
+                  , "<fn=1>\xf120</fn>"
+                  , "<fn=1>\xf1f8</fn>"
                 ]
 
 myKeys = \c -> mkKeymap c $
@@ -142,7 +143,8 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = smartBorders $ avoidStruts ( tiled ||| Mirror tiled ||| Full )
+myLayout = avoidStruts
+           $ smartBorders ( tiled ||| Mirror tiled ||| Full )
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -161,15 +163,12 @@ myManageHook = composeAll
 
 myEventHook = mempty
 
--- myLogHook dest = dynamicLogWithPP $ xmobarPP
---     { ppOutput = hPutStrLn dest
---     , ppTitle = xmobarColor "green" "" . shorten 50
---     }
+
 
 myStartupHook = do
   spawnOnce "clipmenud"
   spawnOnce "tint2"
-  spawnOnce "watch -n 60 feh --randomize --bg-fill ~/Pictures/wallpapers/Riced/* & disown"
+  spawnOnce "wallpaperChanger"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"
   spawnOnce "xinput --set-prop 'pointer:''Micro-Star INT'L CO., LTD. MSI GM41 Light Weight Wireless Mode Gaming Mouse' 'libinput Accel Profile Enabled' 0, 1'"
@@ -178,28 +177,26 @@ myStartupHook = do
   spawnOnce "dunst"
 
 main = do
-    xmproc <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrc"
-    barpipe <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrcLeft"
-    -- barpipe2 <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrcRight"
-    -- barpipe3 <- spawnPipe "xmobar /home/eko/.config/xmonad/xmobarrcCenter"
-    xmonad $ docks $ ewmh def
-        {
-            terminal           = myTerminal,
-            focusFollowsMouse  = myFocusFollowsMouse,
-            clickJustFocuses   = myClickJustFocuses,
-            borderWidth        = myBorderWidth,
-            modMask            = myModMask,
-            workspaces         = myWorkspaces,
-            normalBorderColor  = myNormalBorderColor,
-            focusedBorderColor = myFocusedBorderColor,
-            keys               = myKeys,
-            mouseBindings      = myMouseBindings,
-            layoutHook         = myLayout,
-            manageHook         = myManageHook,
-            handleEventHook    = myEventHook,
-            startupHook        = myStartupHook,
-            logHook = dynamicLogWithPP $ xmobarPP {
-                ppOutput = hPutStrLn xmproc
+    xmproc0 <- spawnPipe "xmobar -x 2 /home/eko/.config/xmonad/xmobarrc0"
+    xmproc1 <- spawnPipe "xmobar -x 2 /home/eko/.config/xmonad/xmobarrc1"
+    xmproc2 <- spawnPipe "xmobar -x 2 /home/eko/.config/xmonad/xmobarrc2"
+    xmonad $ docks $ ewmhFullscreen $ ewmh def
+        { terminal           = myTerminal
+        , focusFollowsMouse  = myFocusFollowsMouse
+        , clickJustFocuses   = myClickJustFocuses
+        , borderWidth        = myBorderWidth
+        , modMask            = myModMask
+        , workspaces         = myWorkspaces
+        , normalBorderColor  = myNormalBorderColor
+        , focusedBorderColor = myFocusedBorderColor
+        , keys               = myKeys
+        , mouseBindings      = myMouseBindings
+        , layoutHook         = myLayout
+        , manageHook         = myManageHook
+        , handleEventHook    = myEventHook
+        , startupHook        = myStartupHook
+        , logHook            = dynamicLogWithPP $ xmobarPP
+                { ppOutput = hPutStrLn xmproc0
                 , ppCurrent = xmobarColor "#95c7ae" "" . wrap
                             ("<box type=Bottom width=2 mb=2 color=#95c7ae>") "</box>"
                 -- Visible but not current workspace
@@ -217,24 +214,3 @@ main = do
                 , ppUrgent = xmobarColor "#ff5050" "" . wrap "!" "!"
             }
         }
-
--- defaults = def {
---       -- simple stuff
---         terminal           = myTerminal,
---         focusFollowsMouse  = myFocusFollowsMouse,
---         clickJustFocuses   = myClickJustFocuses,
---         borderWidth        = myBorderWidth,
---         modMask            = myModMask,
---         workspaces         = myWorkspaces,
---         normalBorderColor  = myNormalBorderColor,
---         focusedBorderColor = myFocusedBorderColor,
-
-        -- keys               = myKeys,
-        -- mouseBindings      = myMouseBindings,
-
-    --     layoutHook         = myLayout,
-    --     manageHook         = myManageHook,
-    --     handleEventHook    = myEventHook,
-    --     logHook = dynamicLogWithPP $ def { ppOutput = hPutStrLn barpipe }
-    --     startupHook        = myStartupHook
-    -- }

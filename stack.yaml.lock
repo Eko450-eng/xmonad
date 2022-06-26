@@ -3,53 +3,11 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages:
-- completed:
-    hackage: X11-1.10.2@sha256:5f449203afe0240ca5124dc4b28d906fbde1d56a15c0c95534f677060f8b72ac,3747
-    pantry-tree:
-      size: 2861
-      sha256: b0cd22d02719a0b53da816a292eb599b9a5ab28fd4b71509332e2840e4f75277
-  original:
-    hackage: X11-1.10.2@sha256:5f449203afe0240ca5124dc4b28d906fbde1d56a15c0c95534f677060f8b72ac,3747
-- completed:
-    hackage: haddock-api-2.25.1@sha256:37839471c3a5937d6a12e6a17cedd2e58ba98d235ee7f6f66293408b9bb9717f,6061
-    pantry-tree:
-      size: 4598
-      sha256: 74e9ee4972c8adc384db394247c6bfea99d62ddd9c805cced96fe67d686477ac
-  original:
-    hackage: haddock-api-2.25.1@sha256:37839471c3a5937d6a12e6a17cedd2e58ba98d235ee7f6f66293408b9bb9717f,6061
-- completed:
-    hackage: hcg-minus-0.15@sha256:cdc82064814d37ae139db8b06dea8fd7db4696332299362af90ff4f0c58fa0bc,953
-    pantry-tree:
-      size: 470
-      sha256: 060ae5a5e5e2ae458fac3c9399b868a3b63a543382e4c30330cebea02c4153fa
-  original:
-    hackage: hcg-minus-0.15@sha256:cdc82064814d37ae139db8b06dea8fd7db4696332299362af90ff4f0c58fa0bc,953
-- completed:
-    hackage: hps-0.15@sha256:47ced9cebc0ef07d21dd2ff01bf68e1d97ad14b8c6206bcf709dc8616f0b2b83,1653
-    pantry-tree:
-      size: 990
-      sha256: 2d352f5205443e29d49149ebddd75edbd496923593e6e9699e1c531c8995cb10
-  original:
-    hackage: hps-0.15@sha256:47ced9cebc0ef07d21dd2ff01bf68e1d97ad14b8c6206bcf709dc8616f0b2b83,1653
-- completed:
-    hackage: iwlib-0.1.0@sha256:226e4582d6878166a172ff98c868e25c4ed478ab28ab493498e464b1fe19d39a,921
-    pantry-tree:
-      size: 259
-      sha256: f867a93991b791adf4c65bb91f385effee7e18bd78d8e0a61fd03f42f6073705
-  original:
-    hackage: iwlib-0.1.0
-- completed:
-    hackage: netlink-1.1.1.0@sha256:d83424b5ba9921191449e4b1f53c7cba7f4375f2c55a9b737c77e982e1f40d00,3689
-    pantry-tree:
-      size: 1598
-      sha256: 42a57a2db0d8b44e04a04905ed56994b7293d2f244595bf3e65480c36d114ac3
-  original:
-    hackage: netlink-1.1.1.0@sha256:d83424b5ba9921191449e4b1f53c7cba7f4375f2c55a9b737c77e982e1f40d00,3689
+packages: []
 snapshots:
 - completed:
-    size: 567037
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/9.yaml
-    sha256: d7d8d5106e53d1669964bd8bd2b0f88a5ad192d772f5376384b76738fd992311
+    size: 618740
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/13.yaml
+    sha256: ef98d70e4018bf01feb00ccdcd33ab26d056dbb71b38057c78fdd0d1ec671c85
   original:
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/9.yaml
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/13.yaml

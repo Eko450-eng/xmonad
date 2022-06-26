@@ -1,0 +1,32 @@
+Config {
+
+font =              "xft:Montserrat:pixelsize=15:regular:antialias=true"
+, additionalFonts = [ "xft:Hack Nerd Font:pixelsize=15:weight=regular"
+                    , "xft:Font Awesome 6 Brands Regular:pixelsize=12:weight=regular"
+                    , "xft:Font Awesome 6 Free Regular:pixelsize=12:weight=regular"
+                    , "xft:Font Awesome 6 Free Solid:pixelsize=12:weight=solid"
+                    , "xft:Mononoki Nerd Font:pixelsize=15:hinting=true:weight=regular"
+                    ]
+
+, bgColor =      "#4c566a"
+, fgColor =      "white"
+, border =       BottomB
+-- , position =     Static { xpos = 4370, ypos = 0, width = 200, height = 20 }
+, position = TopW R 5
+, borderColor =  "#000000"
+, sepChar =  "%"                    -- delineator between plugin names and straight text
+, alignSep = "}{"                   -- separator between left-right alignment
+, lowerOnStart =     True           -- send to bottom of window stack on start
+, hideOnStart =      False          -- start with window unmapped (hidden)
+, allDesktops =      False          -- show on all desktops
+, overrideRedirect = True           -- set the Override Redirect flag (Xlib)
+, pickBroadest =     True           -- choose widest display (multi-monitor)
+, persistent =       True           -- enable/disable hiding (True = disabled)
+
+, commands = [ Run Date "<fn=1>\xf073</fn>%b %d %Y" "date" 10
+              , Run Com "/home/eko/.config/xmonad/trayerpad.sh" [] "trayerpadL" 20
+              ]
+ , template = "}%date%{ %trayerpadL%"
+
+    }
+}

@@ -1,5 +1,5 @@
 #+TITLE: xmobarLeft
-#+PROPERTY: header-args :tangle xmobarrcLeft
+#+PROPERTY: header-args :tangle xmobarrc0
 #+auto_tangle: t
 #+STARTUP: overview
 * Colors

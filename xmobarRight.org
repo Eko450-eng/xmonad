@@ -1,5 +1,5 @@
 #+TITLE: xmobarRight
-#+PROPERTY: header-args :tangle xmobarrcRight
+#+PROPERTY: header-args :tangle xmobarrc2
 #+auto_tangle: t
 #+STARTUP: overview
 * Colors
@@ -61,9 +61,9 @@ Config {
 #+end_src
 
 #+begin_src haskell
-   , commands = [ Run Date "<fn=1>\xf073</fn>  %b %d %Y   " "date" 10
-                , Run Com ".config/xmonad/trayerpad.sh" [] "trayerpadL" 20
-                ]
+    , commands = [ Run Date "<fn=1>\xf073</fn>%b %d %Y" "date" 10
+                 , Run Com "/home/eko/.config/xmonad/trayerpad.sh" [] "trayerpadL" 20
+                 ]
     , template = "}%date%{ %trayerpadL%"
 
        }
