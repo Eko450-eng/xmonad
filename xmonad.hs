@@ -27,7 +27,7 @@ import Colors.DoomOne
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
-myTerminal      = "cool-retro-term"
+myTerminal      = "kitty"
 myBrowser       = "brave"
 home            = "/home/eko"
 myModMask       = mod4Mask
@@ -41,15 +41,25 @@ myFocusFollowsMouse = True
 myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
-myWorkspaces    = [ "<fn=1>\xf303</fn>"
-                  , "<fn=2>\xf268</fn>"
-                  , "<fn=2>\xf392</fn>"
-                  , "<fn=2>\xf167</fn>"
-                  , "<fn=1>\xf11b</fn>"
-                  , "<fn=3>\xf441</fn>"
-                  , "<fn=2>\xf799</fn>"
-                  , "<fn=1>\xf120</fn>"
-                  , "<fn=1>\xf1f8</fn>"
+-- myWorkspaces    = [ "<fn=1> \xf303 </fn> "
+--                   , "<fn=2> \xf268 </fn>"
+--                   , "<fn=2> \xf392 </fn>"
+--                   , "<fn=2> \xf167 </fn>"
+--                   , "<fn=1> \xf11b </fn>"
+--                   , "<fn=3> \xf441 </fn>"
+--                   , "<fn=2> \xf799 </fn>"
+--                   , "<fn=1> \xf120 </fn>"
+--                   , "<fn=1> \xf1f8 </fn>"
+--                 ]
+myWorkspaces    = [ "1"
+                  , "2"
+                  , "3"
+                  , "4"
+                  , "5"
+                  , "6"
+                  , "7"
+                  , "8"
+                  , "9"
                 ]
 
 myKeys = \c -> mkKeymap c $
@@ -65,14 +75,18 @@ myKeys = \c -> mkKeymap c $
         , ("M-i", spawn "clipmenu")
         , ("M-m", sendMessage ToggleLayout)
         , ("M-n", spawn "nautilus")
+        , ("M-o", spawn "pactl -- set-sink-volume 0 -5%")
+        , ("M-p", spawn "pactl -- set-sink-volume 0 +5%")
         , ("M-q", kill)
         , ("M-t", sendMessage NextLayout)
+        , ("M-z", spawn "/home/eko/.config/fish/functions/toggleAudio.sh")
 
         , ("M-S-<Space>", shiftNextScreen)
         , ("M-S-d", spawn "rofi -show calc -no-show-match -no-sort")
         , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
-        , ("M-S-r", spawn "xmonad --recompile; xmonad --restart")
-        , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
+        , ("M-S-o", spawn "pactl -- set-sink-volume 0 -10%")
+        , ("M-S-p", spawn "pactl -- set-sink-volume 0 +10%")
+        , ("M-S-r", spawn "killall xmobar; xmonad --recompile; xmonad --restart")
 
     , ("M-S-C-x", io (exitWith ExitSuccess) )
 
@@ -167,12 +181,10 @@ myEventHook = mempty
 
 myStartupHook = do
   spawnOnce "clipmenud"
-  spawnOnce "tint2"
   spawnOnce "wallpaperChanger"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"
-  spawnOnce "xinput --set-prop 'pointer:''Micro-Star INT'L CO., LTD. MSI GM41 Light Weight Wireless Mode Gaming Mouse' 'libinput Accel Profile Enabled' 0, 1'"
-  spawnOnce "xinput --set-prop 'pointer:''Micro-Star INT'L CO., LTD. MSI GM41 Light Weight Wireless Mode Gaming Mouse' 'libinput Accel Speed' -0.2"
+  spawnOnce "/home/eko/.config/qtile/scripts/mouseAccel.sh"
   spawnOnce "picom --config /home/eko/.config/picom/picom.conf"
   spawnOnce "dunst"
 
@@ -199,18 +211,13 @@ main = do
                 { ppOutput = hPutStrLn xmproc0
                 , ppCurrent = xmobarColor "#95c7ae" "" . wrap
                             ("<box type=Bottom width=2 mb=2 color=#95c7ae>") "</box>"
-                -- Visible but not current workspace
                 , ppVisible = xmobarColor "#2aa899" ""
-                -- Hidden workspace
                 , ppHidden = xmobarColor "#2aa899" "" . wrap
                             ("<box type=Top width=2 mt=1 color=#2aa899>") "</box>"
-                -- Hidden workspaces (no windows)
                 , ppHiddenNoWindows = xmobarColor "#56b6c2" ""
-                -- Title of active window
                 , ppTitle = xmobarColor "#2aa899" "" . shorten 60
-                -- Separator character
                 , ppSep =  "<fc=#ffd47e> | </fc>"
-                -- Urgent workspace
                 , ppUrgent = xmobarColor "#ff5050" "" . wrap "!" "!"
+                , ppOrder = \(ws:l:_:_) -> [ws,l]
             }
         }

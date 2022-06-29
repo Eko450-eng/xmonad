@@ -37,16 +37,15 @@ Config {
 ** Variables
 #+begin_src haskell
       font =              "xft:Montserrat:pixelsize=15:regular:antialias=true"
-    , additionalFonts = [ "xft:Hack Nerd Font:pixelsize=15:weight=regular"
+    , additionalFonts = [ "xft:Hack Nerd Font:pixelsize=15:weight=bold"
                         , "xft:Font Awesome 6 Brands Regular:pixelsize=12:weight=regular"
                         , "xft:Font Awesome 6 Free Regular:pixelsize=12:weight=regular"
                         , "xft:Font Awesome 6 Free Solid:pixelsize=12:weight=solid"
                         , "xft:Mononoki Nerd Font:pixelsize=15:hinting=true:weight=regular"
                         ]
-
     , bgColor =      "#4c566a"
     , fgColor =      "white"
-    , position =     Static { xpos = 1080, ypos = 2, width = 650, height = 23 }
+    , position =     Static { xpos = 1080, ypos = 2, width = 200, height = 25 }
     , border =       BottomB
     , borderColor =  "#000000"
     , sepChar =  "%"                    -- delineator between plugin names and straight text
@@ -60,8 +59,8 @@ Config {
 #+end_src
 
 #+begin_src haskell
-    , commands = [ Run StdinReader]
-    , template = " %StdinReader% "
+    , commands = [ Run UnsafeStdinReader]
+    , template = "}%UnsafeStdinReader%{"
        }
    }
 #+end_src

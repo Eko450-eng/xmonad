@@ -36,7 +36,7 @@ Config {
 * Appearance
 ** Variables
 #+begin_src haskell
-      font =              "xft:Montserrat:pixelsize=15:regular:antialias=true"
+      font =              "xft:Montserrat:pixelsize=17:regular:antialias=true"
     , additionalFonts = [ "xft:Hack Nerd Font:pixelsize=15:weight=regular"
                         , "xft:Font Awesome 6 Brands Regular:pixelsize=12:weight=regular"
                         , "xft:Font Awesome 6 Free Regular:pixelsize=12:weight=regular"
@@ -47,9 +47,9 @@ Config {
     , bgColor =      "#4c566a"
     , fgColor =      "white"
     -- , position =     Static { xpos = 1670, ypos = 2, width = 10, height = 23 }
-    , position =     TopW C 3
+    , position =     TopW C 2
     , border =       BottomB
-    , borderColor =  "#000000"
+    , borderColor =  "#4c566a"
     , sepChar =  "%"                    -- delineator between plugin names and straight text
     , alignSep = "}{"                   -- separator between left-right alignment
     , lowerOnStart =     True           -- send to bottom of window stack on start
@@ -61,7 +61,7 @@ Config {
 #+end_src
 
 #+begin_src haskell
-    , commands = [ Run Date "%H:%M:%S" "date2" 10 ]
+    , commands = [ Run Date "%H:%M" "date2" 10 ]
     , template = "}<fc=#56b6c2>%date2%</fc>{"
        }
    }

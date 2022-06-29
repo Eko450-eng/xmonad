@@ -1,7 +1,7 @@
 Config {
 
-font =              "xft:Montserrat:pixelsize=15:regular:antialias=true"
-, additionalFonts = [ "xft:Hack Nerd Font:pixelsize=15:weight=regular"
+font =              "xft:Montserrat:pixelsize=17:regular:antialias=true"
+, additionalFonts = [ "xft:Hack Nerd Font Mono:pixelsize=17:weight=regular"
                     , "xft:Font Awesome 6 Brands Regular:pixelsize=12:weight=regular"
                     , "xft:Font Awesome 6 Free Regular:pixelsize=12:weight=regular"
                     , "xft:Font Awesome 6 Free Solid:pixelsize=12:weight=solid"
@@ -12,8 +12,8 @@ font =              "xft:Montserrat:pixelsize=15:regular:antialias=true"
 , fgColor =      "white"
 , border =       BottomB
 -- , position =     Static { xpos = 4370, ypos = 0, width = 200, height = 20 }
-, position = TopW R 5
-, borderColor =  "#000000"
+, position = TopW R 10
+, borderColor =  "#4c566a"
 , sepChar =  "%"                    -- delineator between plugin names and straight text
 , alignSep = "}{"                   -- separator between left-right alignment
 , lowerOnStart =     True           -- send to bottom of window stack on start
@@ -23,10 +23,14 @@ font =              "xft:Montserrat:pixelsize=15:regular:antialias=true"
 , pickBroadest =     True           -- choose widest display (multi-monitor)
 , persistent =       True           -- enable/disable hiding (True = disabled)
 
-, commands = [ Run Date "<fn=1>\xf073</fn>%b %d %Y" "date" 10
+, commands = [ Run Date "<fn=3>\xf073  </fn>%b %d %Y" "date" 10
+              , Run Date "<fn=1>\xf7cd</fn>" "speakerIcon" 10
+              , Run Date "<fn=1>\xf028</fn>" "volumeIcon" 10
               , Run Com "/home/eko/.config/xmonad/trayerpad.sh" [] "trayerpadL" 20
+              , Run Com "/home/eko/.config/xmonad/commands/checkForOutput.sh" [] "speaker" 1
+              , Run Com "/home/eko/.config/xmonad/commands/checkForVolume.sh" [] "volume" 1
               ]
- , template = "}%date%{ %trayerpadL%"
+ , template = " }<action=`/home/eko/.config/fish/functions/toggleAudio.sh`>%speakerIcon% %speaker%</action>   %volumeIcon% %volume%   %date%{"
 
     }
 }

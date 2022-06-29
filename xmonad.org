@@ -62,7 +62,7 @@ import qualified Data.Map        as M
 #282c34
 ** Defaults
 #+begin_src haskell
-myTerminal      = "cool-retro-term"
+myTerminal      = "kitty"
 myBrowser       = "brave"
 home            = "/home/eko"
 myModMask       = mod4Mask
@@ -84,15 +84,25 @@ myClickJustFocuses = False
 * Workspaces
 A tagging example: > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 #+begin_src haskell
-myWorkspaces    = [ "<fn=1>\xf303</fn>"
-                  , "<fn=2>\xf268</fn>"
-                  , "<fn=2>\xf392</fn>"
-                  , "<fn=2>\xf167</fn>"
-                  , "<fn=1>\xf11b</fn>"
-                  , "<fn=3>\xf441</fn>"
-                  , "<fn=2>\xf799</fn>"
-                  , "<fn=1>\xf120</fn>"
-                  , "<fn=1>\xf1f8</fn>"
+-- myWorkspaces    = [ "<fn=1> \xf303 </fn> "
+--                   , "<fn=2> \xf268 </fn>"
+--                   , "<fn=2> \xf392 </fn>"
+--                   , "<fn=2> \xf167 </fn>"
+--                   , "<fn=1> \xf11b </fn>"
+--                   , "<fn=3> \xf441 </fn>"
+--                   , "<fn=2> \xf799 </fn>"
+--                   , "<fn=1> \xf120 </fn>"
+--                   , "<fn=1> \xf1f8 </fn>"
+--                 ]
+myWorkspaces    = [ "1"
+                  , "2"
+                  , "3"
+                  , "4"
+                  , "5"
+                  , "6"
+                  , "7"
+                  , "8"
+                  , "9"
                 ]
 #+end_src
 * Keybinds
@@ -101,6 +111,7 @@ myWorkspaces    = [ "<fn=1>\xf303</fn>"
 myKeys = \c -> mkKeymap c $
 #+end_src
 ** Super keys
+*** Just super keys
     #+begin_src haskell
         [ ("M-<Return>", spawn $ terminal c)
         , ("M-<Escape>", spawn "betterlockscreen -l -w dim")
@@ -113,47 +124,53 @@ myKeys = \c -> mkKeymap c $
         , ("M-i", spawn "clipmenu")
         , ("M-m", sendMessage ToggleLayout)
         , ("M-n", spawn "nautilus")
+        , ("M-o", spawn "pactl -- set-sink-volume 0 -5%")
+        , ("M-p", spawn "pactl -- set-sink-volume 0 +5%")
         , ("M-q", kill)
         , ("M-t", sendMessage NextLayout)
+        , ("M-z", spawn "/home/eko/.config/fish/functions/toggleAudio.sh")
     #+end_src
-** Super shift keys
+*** Super shift keys
     #+begin_src haskell
         , ("M-S-<Space>", shiftNextScreen)
         , ("M-S-d", spawn "rofi -show calc -no-show-match -no-sort")
         , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
-        , ("M-S-r", spawn "xmonad --recompile; xmonad --restart")
-        , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
+        , ("M-S-o", spawn "pactl -- set-sink-volume 0 -10%")
+        , ("M-S-p", spawn "pactl -- set-sink-volume 0 +10%")
+        , ("M-S-r", spawn "killall xmobar; xmonad --recompile; xmonad --restart")
     #+end_src
-** Super Shift Ctrl keys
+*** Super Shift Ctrl keys
 #+begin_src haskell
     , ("M-S-C-x", io (exitWith ExitSuccess) )
 #+end_src
-** Super Ctrl keys
+*** Super Ctrl keys
 #+begin_src haskell
     , ("M-C-<Esc>", spawn "systemctl suspend")
     , ("M-C-d", spawn "rofi -show window")
 #+end_src
 ** Alt keys
+*** Just Alt
 #+begin_src haskell
     , ("M1-p", spawn "pavucontrol")
 #+end_src
-** Alt Ctrl keys
+*** Alt Ctrl keys
 #+begin_src haskell
     , ("M1-C-o", spawn "/home/eko/.config/qtile/scripts/picom-toggle.sh")
     , ("M1-C-t", spawn "xterm")
 #+end_src
 
-** screenshot
+** Etc
+*** screenshot
 #+begin_src haskell
     , ("<Print>", spawn "flameshot full -p /home/eko/Pictures")
 #+end_src
-** Music and Video controll
+*** Music and Video controll
 #+begin_src haskell
     , ("M-c", spawn "playerctl play-pause")
     , ("M-S-v", spawn "playerctl next")
     , ("M-S-x", spawn "playerctl previous")
 #+end_src
-** Navigation and Resize
+*** Navigation and Resize
 #+begin_src haskell
     , ("M-j", windows W.focusDown)
     , ("M-k", windows W.focusUp)
@@ -173,7 +190,7 @@ myKeys = \c -> mkKeymap c $
     -- , ("M-,", sendMessage IncMasterN +1)
     -- , ("M-.", sendMessage IncMasterN -1)
 #+end_src
-** Layout
+*** Layout
 #+begin_src haskell
     --  Reset the layouts on the current workspace to default
     -- , ("M-S-<Space>", setLayout $ myLayout.tiled)
@@ -182,7 +199,7 @@ myKeys = \c -> mkKeymap c $
     , ("M-n", refresh)
     , ("M-S-t", withFocused $ windows . W.sink)
 #+end_src
-** Unused (Statusbar)
+*** Unused (Statusbar)
 #+begin_src haskell
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
@@ -191,7 +208,7 @@ myKeys = \c -> mkKeymap c $
 
     ]
 #+end_src
-** Workspaces
+*** Workspaces
 #+begin_src haskell
     ++
     [("M-" ++ m ++ k, windows $ f i)
@@ -291,12 +308,10 @@ per-workspace layout choices.
 #+begin_src haskell
 myStartupHook = do
   spawnOnce "clipmenud"
-  spawnOnce "tint2"
   spawnOnce "wallpaperChanger"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"
-  spawnOnce "xinput --set-prop 'pointer:''Micro-Star INT'L CO., LTD. MSI GM41 Light Weight Wireless Mode Gaming Mouse' 'libinput Accel Profile Enabled' 0, 1'"
-  spawnOnce "xinput --set-prop 'pointer:''Micro-Star INT'L CO., LTD. MSI GM41 Light Weight Wireless Mode Gaming Mouse' 'libinput Accel Speed' -0.2"
+  spawnOnce "/home/eko/.config/qtile/scripts/mouseAccel.sh"
   spawnOnce "picom --config /home/eko/.config/picom/picom.conf"
   spawnOnce "dunst"
 #+end_src
@@ -325,19 +340,14 @@ main = do
                 { ppOutput = hPutStrLn xmproc0
                 , ppCurrent = xmobarColor "#95c7ae" "" . wrap
                             ("<box type=Bottom width=2 mb=2 color=#95c7ae>") "</box>"
-                -- Visible but not current workspace
                 , ppVisible = xmobarColor "#2aa899" ""
-                -- Hidden workspace
                 , ppHidden = xmobarColor "#2aa899" "" . wrap
                             ("<box type=Top width=2 mt=1 color=#2aa899>") "</box>"
-                -- Hidden workspaces (no windows)
                 , ppHiddenNoWindows = xmobarColor "#56b6c2" ""
-                -- Title of active window
                 , ppTitle = xmobarColor "#2aa899" "" . shorten 60
-                -- Separator character
                 , ppSep =  "<fc=#ffd47e> | </fc>"
-                -- Urgent workspace
                 , ppUrgent = xmobarColor "#ff5050" "" . wrap "!" "!"
+                , ppOrder = \(ws:l:_:_) -> [ws,l]
             }
         }
 #+end_src
