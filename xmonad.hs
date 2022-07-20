@@ -185,6 +185,7 @@ myEventHook = mempty
 myStartupHook = do
   spawn "ps cax | grep clipmenud ; if ! [ $? -eq 0 ]; then clipmenud; fi"
   spawnOnce "wallpaperChanger"
+  spawnOnce "polybar"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"
   spawnOnce "/home/eko/.config/qtile/scripts/mouseAccel.sh"
@@ -192,9 +193,9 @@ myStartupHook = do
   spawnOnce "dunst"
 
 main = do
-    xmproc0 <- spawnPipe "xmobar -x 2 /home/eko/.config/xmonad/xmobarrc0"
-    xmproc1 <- spawnPipe "xmobar -x 2 /home/eko/.config/xmonad/xmobarrc1"
-    xmproc2 <- spawnPipe "xmobar -x 2 /home/eko/.config/xmonad/xmobarrc2"
+    -- xmproc0 <- spawnPipe "xmobar -x 2 /home/eko/.config/xmonad/xmobarrc0"
+    -- xmproc1 <- spawnPipe "xmobar -x 2 /home/eko/.config/xmonad/xmobarrc1"
+    -- xmproc2 <- spawnPipe "xmobar -x 2 /home/eko/.config/xmonad/xmobarrc2"
     xmonad $ docks $ ewmhFullscreen $ ewmh def
         { terminal           = myTerminal
         , focusFollowsMouse  = myFocusFollowsMouse
@@ -210,17 +211,17 @@ main = do
         , manageHook         = myManageHook
         , handleEventHook    = myEventHook
         , startupHook        = myStartupHook
-        , logHook            = dynamicLogWithPP $ xmobarPP
-                { ppOutput = hPutStrLn xmproc0
-                , ppCurrent = xmobarColor "#95c7ae" "" . wrap
-                            ("<box type=Bottom width=2 mb=2 color=#95c7ae>") "</box>"
-                , ppVisible = xmobarColor "#2aa899" ""
-                , ppHidden = xmobarColor "#2aa899" "" . wrap
-                            ("<box type=Top width=2 mt=1 color=#2aa899>") "</box>"
-                , ppHiddenNoWindows = xmobarColor "#56b6c2" ""
-                , ppTitle = xmobarColor "#2aa899" "" . shorten 60
-                , ppSep =  "<fc=#ffd47e> | </fc>"
-                , ppUrgent = xmobarColor "#ff5050" "" . wrap "!" "!"
-                , ppOrder = \(ws:l:_:_) -> [ws,l]
-            }
+        -- , logHook            = dynamicLogWithPP $ xmobarPP
+        --         { ppOutput = hPutStrLn xmproc0
+        --         , ppCurrent = xmobarColor "#95c7ae" "" . wrap
+        --                     ("<box type=Bottom width=2 mb=2 color=#95c7ae>") "</box>"
+        --         , ppVisible = xmobarColor "#2aa899" ""
+        --         , ppHidden = xmobarColor "#2aa899" "" . wrap
+        --                     ("<box type=Top width=2 mt=1 color=#2aa899>") "</box>"
+        --         , ppHiddenNoWindows = xmobarColor "#56b6c2" ""
+        --         , ppTitle = xmobarColor "#2aa899" "" . shorten 60
+        --         , ppSep =  "<fc=#ffd47e> | </fc>"
+        --         , ppUrgent = xmobarColor "#ff5050" "" . wrap "!" "!"
+        --         , ppOrder = \(ws:l:_:_) -> [ws,l]
+        --     }
         }
