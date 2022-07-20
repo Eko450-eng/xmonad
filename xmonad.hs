@@ -10,6 +10,7 @@ import XMonad.Util.Run
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
+import XMonad.Layout.ThreeColumns
 
 import XMonad.Layout.ToggleLayouts
 
@@ -78,6 +79,7 @@ myKeys = \c -> mkKeymap c $
         , ("M-o", spawn "pactl -- set-sink-volume 0 -5%")
         , ("M-p", spawn "pactl -- set-sink-volume 0 +5%")
         , ("M-q", kill)
+        , ("M-s", spawn "deepin-screenshot")
         , ("M-t", sendMessage NextLayout)
         , ("M-z", spawn "/home/eko/.config/fish/functions/toggleAudio.sh")
 
@@ -158,8 +160,9 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     ]
 
 myLayout = avoidStruts
-           $ smartBorders ( tiled ||| Mirror tiled ||| Full )
+           $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
   where
+     threeCol   = ThreeCol nmaster delta ratio
      tiled   = Tall nmaster delta ratio
      nmaster = 1
      ratio   = 1/2
@@ -180,7 +183,7 @@ myEventHook = mempty
 
 
 myStartupHook = do
-  spawnOnce "clipmenud"
+  spawn "ps cax | grep clipmenud ; if ! [ $? -eq 0 ]; then clipmenud; fi"
   spawnOnce "wallpaperChanger"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"

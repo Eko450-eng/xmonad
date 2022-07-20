@@ -23,7 +23,7 @@ font =              "xft:Montserrat:pixelsize=17:regular:antialias=true"
 , pickBroadest =     True           -- choose widest display (multi-monitor)
 , persistent =       True           -- enable/disable hiding (True = disabled)
 
-, commands = [ Run Date "<fn=3>\xf073  </fn>%b %d %Y" "date" 10
+, commands = [ Run Date "<fn=3>\xf073  </fn>%d %b %Y" "date" 10
               , Run Date "<fn=1>\xf7cd</fn>" "speakerIcon" 10
               , Run Date "<fn=1>\xf028</fn>" "volumeIcon" 10
               , Run Com "/home/eko/.config/xmonad/trayerpad.sh" [] "trayerpadL" 20

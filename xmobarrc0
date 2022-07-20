@@ -9,7 +9,8 @@ font =              "xft:Montserrat:pixelsize=15:regular:antialias=true"
                     ]
 , bgColor =      "#4c566a"
 , fgColor =      "white"
-, position =     Static { xpos = 1080, ypos = 2, width = 200, height = 25 }
+-- , position =     Static { xpos = 1080, ypos = 2, width = 200, height = 25 }
+, position =     TopW L 8
 , border =       BottomB
 , borderColor =  "#000000"
 , sepChar =  "%"                    -- delineator between plugin names and straight text
