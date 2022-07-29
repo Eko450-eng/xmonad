@@ -1,3 +1,6 @@
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Imports                                                  │
+--  ╰──────────────────────────────────────────────────────────╯
 import XMonad
 import Data.Monoid
 import System.Exit
@@ -28,6 +31,10 @@ import Colors.DoomOne
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Base variables                                           │
+--  ╰──────────────────────────────────────────────────────────╯
+
 myTerminal      = "kitty"
 myBrowser       = "brave"
 home            = "/home/eko"
@@ -36,35 +43,35 @@ myBorderWidth   = 1
 myNormalBorderColor  = "#c0c5ce"
 myFocusedBorderColor = "#2aa899"
 
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Mouse config                                             │
+--  ╰──────────────────────────────────────────────────────────╯
+
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
 myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
--- myWorkspaces    = [ "<fn=1> \xf303 </fn> "
---                   , "<fn=2> \xf268 </fn>"
---                   , "<fn=2> \xf392 </fn>"
---                   , "<fn=2> \xf167 </fn>"
---                   , "<fn=1> \xf11b </fn>"
---                   , "<fn=3> \xf441 </fn>"
---                   , "<fn=2> \xf799 </fn>"
---                   , "<fn=1> \xf120 </fn>"
---                   , "<fn=1> \xf1f8 </fn>"
---                 ]
-myWorkspaces    = [ "1"
-                  , "2"
-                  , "3"
-                  , "4"
-                  , "5"
-                  , "6"
-                  , "7"
-                  , "8"
-                  , "9"
-                ]
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Workspaces                                               │
+--  ╰──────────────────────────────────────────────────────────╯
+
+myWorkspaces = [ "\xf268" , "\xf121" , "\xf392" , "\xf167" , "\xf11b" , "\xf120" , "\xf799" , "\xf0e0" , "\xf1f8" ]                                   
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ myWorkspaces = [ "1", "2", "3", "4", "5", "6", "7",      │
+--  │  "8", "9"]                                               │
+--  ╰──────────────────────────────────────────────────────────╯
+
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Keybinds                                                 │
+--  ╰──────────────────────────────────────────────────────────╯
 
 myKeys = \c -> mkKeymap c $
 
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Super keys                                               │
+--  ╰──────────────────────────────────────────────────────────╯
         [ ("M-<Return>", spawn $ terminal c)
         , ("M-<Escape>", spawn "betterlockscreen -l -w dim")
         , ("M-<Space>", nextScreen)
@@ -79,26 +86,53 @@ myKeys = \c -> mkKeymap c $
         , ("M-o", spawn "pactl -- set-sink-volume 0 -5%")
         , ("M-p", spawn "pactl -- set-sink-volume 0 +5%")
         , ("M-q", kill)
+        , ("M-r", spawn "neovide")
         , ("M-s", spawn "deepin-screenshot")
         , ("M-t", sendMessage NextLayout)
         , ("M-z", spawn "/home/eko/.config/fish/functions/toggleAudio.sh")
+
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Super Shift                                              │
+--  ╰──────────────────────────────────────────────────────────╯
 
         , ("M-S-<Space>", shiftNextScreen)
         , ("M-S-d", spawn "rofi -show calc -no-show-match -no-sort")
         , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
         , ("M-S-o", spawn "pactl -- set-sink-volume 0 -10%")
         , ("M-S-p", spawn "pactl -- set-sink-volume 0 +10%")
-        , ("M-S-r", spawn "killall xmobar; xmonad --recompile; xmonad --restart")
+        , ("M-S-r", spawn "killall polybar; xmonad --recompile; xmonad --restart")
+
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Super shift control                                      │
+--  ╰──────────────────────────────────────────────────────────╯
 
     , ("M-S-C-x", io (exitWith ExitSuccess) )
+
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Super Control                                            │
+--  ╰──────────────────────────────────────────────────────────╯
 
     , ("M-C-<Esc>", spawn "systemctl suspend")
     , ("M-C-d", spawn "rofi -show window")
 
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Alt                                                      │
+--  ╰──────────────────────────────────────────────────────────╯
+
     , ("M1-p", spawn "pavucontrol")
+    , ("M1-w", spawn "killall polybar")
+    , ("M1-r", spawn "ps cax | grep polybar ; if ! [ $? -eq 0 ]; then polybar; fi")
+
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Alt control                                              │
+--  ╰──────────────────────────────────────────────────────────╯
 
     , ("M1-C-o", spawn "/home/eko/.config/qtile/scripts/picom-toggle.sh")
     , ("M1-C-t", spawn "xterm")
+
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Multimedia                                               │
+--  ╰──────────────────────────────────────────────────────────╯
 
     , ("<Print>", spawn "flameshot full -p /home/eko/Pictures")
 
@@ -106,6 +140,9 @@ myKeys = \c -> mkKeymap c $
     , ("M-S-v", spawn "playerctl next")
     , ("M-S-x", spawn "playerctl previous")
 
+--  ╭──────────────────────────────────────────────────────────╮
+--  │ Move windows                                             │
+--  ╰──────────────────────────────────────────────────────────╯
     , ("M-j", windows W.focusDown)
     , ("M-k", windows W.focusUp)
     , ("M-S-j", windows W.swapDown)
@@ -184,8 +221,8 @@ myEventHook = mempty
 
 myStartupHook = do
   spawn "ps cax | grep clipmenud ; if ! [ $? -eq 0 ]; then clipmenud; fi"
+  spawn "ps cax | grep polybar ; if ! [ $? -eq 0 ]; then polybar; fi"
   spawnOnce "wallpaperChanger"
-  spawnOnce "polybar"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"
   spawnOnce "/home/eko/.config/qtile/scripts/mouseAccel.sh"

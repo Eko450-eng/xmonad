@@ -1,7 +1,7 @@
 #+TITLE: xmonad
 #+PROPERTY: header-args :tangle xmonad.hs
-#+auto_tangle nil
 #+STARTUP: overview
+
 * Imports
 #+begin_src haskell
 import XMonad
@@ -85,26 +85,26 @@ myClickJustFocuses = False
 * Workspaces
 A tagging example: > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 #+begin_src haskell
--- myWorkspaces    = [ "<fn=1> \xf303 </fn> "
---                   , "<fn=2> \xf268 </fn>"
---                   , "<fn=2> \xf392 </fn>"
---                   , "<fn=2> \xf167 </fn>"
---                   , "<fn=1> \xf11b </fn>"
---                   , "<fn=3> \xf441 </fn>"
---                   , "<fn=2> \xf799 </fn>"
---                   , "<fn=1> \xf120 </fn>"
---                   , "<fn=1> \xf1f8 </fn>"
---                 ]
-myWorkspaces    = [ "1"
-                  , "2"
-                  , "3"
-                  , "4"
-                  , "5"
-                  , "6"
-                  , "7"
-                  , "8"
-                  , "9"
+myWorkspaces    = [ "\xf268"
+                  , "\xf121"
+                  , "\xf392"
+                  , "\xf167"
+                  , "\xf11b"
+                  , "\xf120"
+                  , "\xf799"
+                  , "\xf0e0"
+                  , "\xf1f8"
                 ]
+-- myWorkspaces    = [ "1"
+--                   , "2"
+--                   , "3"
+--                   , "4"
+--                   , "5"
+--                   , "6"
+--                   , "7"
+--                   , "8"
+--                   , "9"
+--                 ]
 #+end_src
 * Keybinds
 ** Ignore
@@ -128,6 +128,7 @@ myKeys = \c -> mkKeymap c $
         , ("M-o", spawn "pactl -- set-sink-volume 0 -5%")
         , ("M-p", spawn "pactl -- set-sink-volume 0 +5%")
         , ("M-q", kill)
+        , ("M-r", spawn "neovide")
         , ("M-s", spawn "deepin-screenshot")
         , ("M-t", sendMessage NextLayout)
         , ("M-z", spawn "/home/eko/.config/fish/functions/toggleAudio.sh")
@@ -139,7 +140,7 @@ myKeys = \c -> mkKeymap c $
         , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
         , ("M-S-o", spawn "pactl -- set-sink-volume 0 -10%")
         , ("M-S-p", spawn "pactl -- set-sink-volume 0 +10%")
-        , ("M-S-r", spawn "killall xmobar; xmonad --recompile; xmonad --restart")
+        , ("M-S-r", spawn "killall polybar; xmonad --recompile; xmonad --restart")
     #+end_src
 *** Super Shift Ctrl keys
 #+begin_src haskell
@@ -311,8 +312,8 @@ per-workspace layout choices.
 #+begin_src haskell
 myStartupHook = do
   spawn "ps cax | grep clipmenud ; if ! [ $? -eq 0 ]; then clipmenud; fi"
+  spawn "ps cax | grep polybar ; if ! [ $? -eq 0 ]; then polybar; fi"
   spawnOnce "wallpaperChanger"
-  spawnOnce "polybar"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"
   spawnOnce "/home/eko/.config/qtile/scripts/mouseAccel.sh"
