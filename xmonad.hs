@@ -1,5 +1,5 @@
 --  ╭──────────────────────────────────────────────────────────╮
---  │ Imports                                                  │
+--  │ Imports                 ThreeColumns                                 │
 --  ╰──────────────────────────────────────────────────────────╯
 import XMonad
 import Data.Monoid
@@ -14,7 +14,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
-
+import XMonad.Layout.Spacing
 import XMonad.Layout.ToggleLayouts
 
 import XMonad.Config.Desktop
@@ -42,6 +42,7 @@ myModMask       = mod4Mask
 myBorderWidth   = 1
 myNormalBorderColor  = "#c0c5ce"
 myFocusedBorderColor = "#2aa899"
+myGap = 5
 
 --  ╭──────────────────────────────────────────────────────────╮
 --  │ Mouse config                                             │
@@ -196,8 +197,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = avoidStruts
-           $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
+myLayout = spacingWithEdge myGap $ avoidStruts $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
   where
      threeCol   = ThreeCol nmaster delta ratio
      tiled   = Tall nmaster delta ratio
