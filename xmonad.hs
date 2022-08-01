@@ -11,6 +11,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Spacing
 
 import XMonad.Layout.ToggleLayouts
 
@@ -159,8 +160,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = avoidStruts
-           $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
+myLayout = spacingWithEdge 5 $ avoidStruts $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
   where
      threeCol   = ThreeCol nmaster delta ratio
      tiled   = Tall nmaster delta ratio
