@@ -155,6 +155,7 @@ myKeys = \c -> mkKeymap c $
 *** Just Alt
 #+begin_src haskell
     , ("M1-p", spawn "pavucontrol")
+    , ("M1-o", spawn "~/.config/scripts/changeOutput.sh")
 #+end_src
 *** Alt Ctrl keys
 #+begin_src haskell

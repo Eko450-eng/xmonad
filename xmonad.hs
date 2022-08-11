@@ -1,6 +1,3 @@
---  ╭──────────────────────────────────────────────────────────╮
---  │ Imports                 ThreeColumns                                 │
---  ╰──────────────────────────────────────────────────────────╯
 import XMonad
 import Data.Monoid
 import System.Exit
@@ -14,7 +11,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
-import XMonad.Layout.Spacing
+
 import XMonad.Layout.ToggleLayouts
 
 import XMonad.Config.Desktop
@@ -31,10 +28,6 @@ import Colors.DoomOne
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
---  ╭──────────────────────────────────────────────────────────╮
---  │ Base variables                                           │
---  ╰──────────────────────────────────────────────────────────╯
-
 myTerminal      = "kitty"
 myBrowser       = "brave"
 home            = "/home/eko"
@@ -42,11 +35,6 @@ myModMask       = mod4Mask
 myBorderWidth   = 1
 myNormalBorderColor  = "#c0c5ce"
 myFocusedBorderColor = "#2aa899"
-myGap = 5
-
---  ╭──────────────────────────────────────────────────────────╮
---  │ Mouse config                                             │
---  ╰──────────────────────────────────────────────────────────╯
 
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
@@ -54,25 +42,29 @@ myFocusFollowsMouse = True
 myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
---  ╭──────────────────────────────────────────────────────────╮
---  │ Workspaces                                               │
---  ╰──────────────────────────────────────────────────────────╯
-
-myWorkspaces = [ "\xf268" , "\xf121" , "\xf392" , "\xf167" , "\xf11b" , "\xf120" , "\xf799" , "\xf0e0" , "\xf1f8" ]                                   
---  ╭──────────────────────────────────────────────────────────╮
---  │ myWorkspaces = [ "1", "2", "3", "4", "5", "6", "7",      │
---  │  "8", "9"]                                               │
---  ╰──────────────────────────────────────────────────────────╯
-
---  ╭──────────────────────────────────────────────────────────╮
---  │ Keybinds                                                 │
---  ╰──────────────────────────────────────────────────────────╯
+myWorkspaces    = [ "\xf268"
+                  , "\xf121"
+                  , "\xf392"
+                  , "\xf167"
+                  , "\xf11b"
+                  , "\xf120"
+                  , "\xf799"
+                  , "\xf0e0"
+                  , "\xf1f8"
+                ]
+-- myWorkspaces    = [ "1"
+--                   , "2"
+--                   , "3"
+--                   , "4"
+--                   , "5"
+--                   , "6"
+--                   , "7"
+--                   , "8"
+--                   , "9"
+--                 ]
 
 myKeys = \c -> mkKeymap c $
 
---  ╭──────────────────────────────────────────────────────────╮
---  │ Super keys                                               │
---  ╰──────────────────────────────────────────────────────────╯
         [ ("M-<Return>", spawn $ terminal c)
         , ("M-<Escape>", spawn "betterlockscreen -l -w dim")
         , ("M-<Space>", nextScreen)
@@ -92,10 +84,6 @@ myKeys = \c -> mkKeymap c $
         , ("M-t", sendMessage NextLayout)
         , ("M-z", spawn "/home/eko/.config/fish/functions/toggleAudio.sh")
 
---  ╭──────────────────────────────────────────────────────────╮
---  │ Super Shift                                              │
---  ╰──────────────────────────────────────────────────────────╯
-
         , ("M-S-<Space>", shiftNextScreen)
         , ("M-S-d", spawn "rofi -show calc -no-show-match -no-sort")
         , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
@@ -103,37 +91,16 @@ myKeys = \c -> mkKeymap c $
         , ("M-S-p", spawn "pactl -- set-sink-volume 0 +10%")
         , ("M-S-r", spawn "killall polybar; xmonad --recompile; xmonad --restart")
 
---  ╭──────────────────────────────────────────────────────────╮
---  │ Super shift control                                      │
---  ╰──────────────────────────────────────────────────────────╯
-
     , ("M-S-C-x", io (exitWith ExitSuccess) )
-
---  ╭──────────────────────────────────────────────────────────╮
---  │ Super Control                                            │
---  ╰──────────────────────────────────────────────────────────╯
 
     , ("M-C-<Esc>", spawn "systemctl suspend")
     , ("M-C-d", spawn "rofi -show window")
 
---  ╭──────────────────────────────────────────────────────────╮
---  │ Alt                                                      │
---  ╰──────────────────────────────────────────────────────────╯
-
     , ("M1-p", spawn "pavucontrol")
-    , ("M1-w", spawn "killall polybar")
-    , ("M1-r", spawn "ps cax | grep polybar ; if ! [ $? -eq 0 ]; then polybar; fi")
-
---  ╭──────────────────────────────────────────────────────────╮
---  │ Alt control                                              │
---  ╰──────────────────────────────────────────────────────────╯
+    , ("M1-o", spawn "~/.config/scripts/changeOutput.sh")
 
     , ("M1-C-o", spawn "/home/eko/.config/qtile/scripts/picom-toggle.sh")
     , ("M1-C-t", spawn "xterm")
-
---  ╭──────────────────────────────────────────────────────────╮
---  │ Multimedia                                               │
---  ╰──────────────────────────────────────────────────────────╯
 
     , ("<Print>", spawn "flameshot full -p /home/eko/Pictures")
 
@@ -141,9 +108,6 @@ myKeys = \c -> mkKeymap c $
     , ("M-S-v", spawn "playerctl next")
     , ("M-S-x", spawn "playerctl previous")
 
---  ╭──────────────────────────────────────────────────────────╮
---  │ Move windows                                             │
---  ╰──────────────────────────────────────────────────────────╯
     , ("M-j", windows W.focusDown)
     , ("M-k", windows W.focusUp)
     , ("M-S-j", windows W.swapDown)
@@ -197,7 +161,8 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = spacingWithEdge myGap $ avoidStruts $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
+myLayout = avoidStruts
+           $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
   where
      threeCol   = ThreeCol nmaster delta ratio
      tiled   = Tall nmaster delta ratio
