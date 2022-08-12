@@ -17,6 +17,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Spacing
 
 import XMonad.Layout.ToggleLayouts
 
@@ -125,8 +126,8 @@ myKeys = \c -> mkKeymap c $
         , ("M-i", spawn "clipmenu")
         , ("M-m", sendMessage ToggleLayout)
         , ("M-n", spawn "nautilus")
-        , ("M-o", spawn "pactl -- set-sink-volume 0 -5%")
-        , ("M-p", spawn "pactl -- set-sink-volume 0 +5%")
+        , ("M-o", spawn "pulseaudio-control --volume-max 130 down")
+        , ("M-p", spawn "pulseaudio-control --volume-max 130 up")
         , ("M-q", kill)
         , ("M-r", spawn "neovide")
         , ("M-s", spawn "deepin-screenshot")
@@ -156,6 +157,8 @@ myKeys = \c -> mkKeymap c $
 #+begin_src haskell
     , ("M1-p", spawn "pavucontrol")
     , ("M1-o", spawn "~/.config/scripts/changeOutput.sh")
+    , ("M1-w", spawn "killall polybar")
+    , ("M1-r", spawn "polybar")
 #+end_src
 *** Alt Ctrl keys
 #+begin_src haskell
@@ -251,8 +254,7 @@ The available layouts.  Note that each layout is separated by |||,
 which denotes layout choice.
 
 #+begin_src haskell
-myLayout = avoidStruts
-           $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
+myLayout = spacingWithEdge 5 $ avoidStruts $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
   where
      threeCol   = ThreeCol nmaster delta ratio
      tiled   = Tall nmaster delta ratio

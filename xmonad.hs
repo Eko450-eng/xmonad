@@ -11,6 +11,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Spacing
 
 import XMonad.Layout.ToggleLayouts
 
@@ -76,8 +77,8 @@ myKeys = \c -> mkKeymap c $
         , ("M-i", spawn "clipmenu")
         , ("M-m", sendMessage ToggleLayout)
         , ("M-n", spawn "nautilus")
-        , ("M-o", spawn "pactl -- set-sink-volume 0 -5%")
-        , ("M-p", spawn "pactl -- set-sink-volume 0 +5%")
+        , ("M-o", spawn "pulseaudio-control --volume-max 130 down")
+        , ("M-p", spawn "pulseaudio-control --volume-max 130 up")
         , ("M-q", kill)
         , ("M-r", spawn "neovide")
         , ("M-s", spawn "deepin-screenshot")
@@ -98,6 +99,8 @@ myKeys = \c -> mkKeymap c $
 
     , ("M1-p", spawn "pavucontrol")
     , ("M1-o", spawn "~/.config/scripts/changeOutput.sh")
+    , ("M1-w", spawn "killall polybar")
+    , ("M1-r", spawn "polybar")
 
     , ("M1-C-o", spawn "/home/eko/.config/qtile/scripts/picom-toggle.sh")
     , ("M1-C-t", spawn "xterm")
@@ -161,8 +164,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-myLayout = avoidStruts
-           $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
+myLayout = spacingWithEdge 5 $ avoidStruts $ smartBorders (threeCol ||| tiled ||| Mirror tiled ||| Full )
   where
      threeCol   = ThreeCol nmaster delta ratio
      tiled   = Tall nmaster delta ratio
