@@ -24,6 +24,7 @@ import XMonad.Layout.ToggleLayouts
 import XMonad.Config.Desktop
 
 import XMonad.Actions.CycleWS
+import XMonad.Actions.Warp
 
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.Place
@@ -114,7 +115,7 @@ myKeys = \c -> mkKeymap c $
 #+end_src
 ** Super keys
 *** Just super keys
-    #+begin_src haskell
+#+begin_src haskell
         [ ("M-<Return>", spawn $ terminal c)
         , ("M-<Escape>", spawn "betterlockscreen -l -w dim")
         , ("M-<Space>", nextScreen)
@@ -123,7 +124,7 @@ myKeys = \c -> mkKeymap c $
         , ("M-d", spawn "rofi -show drun")
         , ("M-e", spawn "emacsclient -c -a 'emacs'")
         , ("M-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh alacritty")
-        , ("M-i", spawn "clipmenu")
+        , ("M-i", spawn "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}'")
         , ("M-m", sendMessage ToggleLayout)
         , ("M-n", spawn "nautilus")
         , ("M-o", spawn "pulseaudio-control --volume-max 130 down")
@@ -132,17 +133,18 @@ myKeys = \c -> mkKeymap c $
         , ("M-r", spawn "neovide")
         , ("M-s", spawn "deepin-screenshot")
         , ("M-t", sendMessage NextLayout)
+        , ("M-u", warpToWindow (0.5) (0.5))
         , ("M-z", spawn "/home/eko/.config/fish/functions/toggleAudio.sh")
-    #+end_src
+#+end_src
 *** Super shift keys
-    #+begin_src haskell
+#+begin_src haskell
         , ("M-S-<Space>", shiftNextScreen)
         , ("M-S-d", spawn "rofi -show calc -no-show-match -no-sort")
         , ("M-S-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh glava")
         , ("M-S-o", spawn "pactl -- set-sink-volume 0 -10%")
         , ("M-S-p", spawn "pactl -- set-sink-volume 0 +10%")
         , ("M-S-r", spawn "killall polybar; xmonad --recompile; xmonad --restart")
-    #+end_src
+#+end_src
 *** Super Shift Ctrl keys
 #+begin_src haskell
     , ("M-S-C-x", io (exitWith ExitSuccess) )
@@ -312,10 +314,12 @@ Perform an arbitrary action each time xmonad starts or is restarted
 with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 per-workspace layout choices.
 
+spawn "ps cax | grep clipmenud ; if ! [ $? -eq 0 ]; then clipmenud; fi"
+
 #+begin_src haskell
 myStartupHook = do
-  spawn "ps cax | grep clipmenud ; if ! [ $? -eq 0 ]; then clipmenud; fi"
   spawn "ps cax | grep polybar ; if ! [ $? -eq 0 ]; then polybar; fi"
+  spawnOnce "greenclip daemon"
   spawnOnce "wallpaperChanger"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"

@@ -18,6 +18,7 @@ import XMonad.Layout.ToggleLayouts
 import XMonad.Config.Desktop
 
 import XMonad.Actions.CycleWS
+import XMonad.Actions.Warp
 
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.Place
@@ -74,7 +75,7 @@ myKeys = \c -> mkKeymap c $
         , ("M-d", spawn "rofi -show drun")
         , ("M-e", spawn "emacsclient -c -a 'emacs'")
         , ("M-g", spawn "/home/eko/.config/qtile/scripts/checkForGlava.sh alacritty")
-        , ("M-i", spawn "clipmenu")
+        , ("M-i", spawn "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}'")
         , ("M-m", sendMessage ToggleLayout)
         , ("M-n", spawn "nautilus")
         , ("M-o", spawn "pulseaudio-control --volume-max 130 down")
@@ -83,6 +84,7 @@ myKeys = \c -> mkKeymap c $
         , ("M-r", spawn "neovide")
         , ("M-s", spawn "deepin-screenshot")
         , ("M-t", sendMessage NextLayout)
+        , ("M-u", warpToWindow (0.5) (0.5))
         , ("M-z", spawn "/home/eko/.config/fish/functions/toggleAudio.sh")
 
         , ("M-S-<Space>", shiftNextScreen)
@@ -187,8 +189,8 @@ myEventHook = mempty
 
 
 myStartupHook = do
-  spawn "ps cax | grep clipmenud ; if ! [ $? -eq 0 ]; then clipmenud; fi"
   spawn "ps cax | grep polybar ; if ! [ $? -eq 0 ]; then polybar; fi"
+  spawnOnce "greenclip daemon"
   spawnOnce "wallpaperChanger"
   spawnOnce "emacs /usr/bin/emacs --daemon"
   spawnOnce "xset s off -dpms"
